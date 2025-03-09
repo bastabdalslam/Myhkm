@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=yes">
+    <title>عبر وخواطر</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Cairo:wght@700&display=swap" rel="stylesheet">
+    <script src="script.js" defer></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>عبر وخواطر</h1>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="ابحث هنا...">
+            <button onclick="searchContent()"><i class="fas fa-search"></i></button>
+        </div>
+        <button id="hamburger"><i class="fas fa-bars"></i></button>
+    </header>
+
+    <nav>
+        <ul>
+            <li onclick="showSection('home')"><i class="fas fa-home"></i> الأقسام</li>
+            <li onclick="showSection('new')"><i class="fas fa-plus"></i> الجديدة</li>
+            <li onclick="showSection('favorite')"><i class="fas fa-heart"></i> المفضلة</li>
+            <li onclick="showSection('settings')"><i class="fas fa-cog"></i> الإعدادات</li>
+        </ul>
+    </nav>
+
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3>القائمة</h3>
+            <button id="closeSidebar" onclick="closeSidebar()"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><i class="fas fa-info-circle"></i> إصدار التطبيق: 1.0.0</li>
+            <li onclick="notifications()"><i class="fas fa-bell"></i> الإشعارات</li>
+            <li onclick="checkUpdate()"><i class="fas fa-sync"></i> تحديث التطبيق</li>
+            <li onclick="showSection('decoration')"><i class="fas fa-paint-brush"></i> الزخرفة</li>
+            <li onclick="showSection('custom-cards')"><i class="fas fa-image"></i> إنشاء بطاقات</li>
+            <li id="themeToggle"><i class="fas fa-moon"></i> تبديل الوضع الليلي</li>
+            <li id="audioToggle" onclick="toggleAudio()"><i class="fas fa-volume-up"></i> تشغيل الصوت</li>
+        </ul>
+    </div>
+
+    <main>
+        <section id="home" class="content active">
+            <h2>الأقسام</h2>
+            <button id="toggleView" class="view-toggle">تبديل العرض <i class="fas fa-exchange-alt"></i></button>
+            <ul id="categoriesList" class="categories grid-view">
+                <li onclick="showSection('hikam')"><i class="fas fa-lightbulb"></i> حكم وأمثلة</li>
+                <li onclick="showSection('azkar')"><i class="fas fa-pray"></i> أدعية وأذكار</li>
+                <li onclick="showSection('quotes')"><i class="fas fa-pen"></i> عبارات وخواطر</li>
+                <li onclick="showSection('qisas')"><i class="fas fa-book-open"></i> قصص</li>
+                <li onclick="showSection('mawaez')"><i class="fas fa-heart"></i> مواعظ</li>
+                <li onclick="showSection('atab')"><i class="fas fa-sad-tear"></i> عتاب</li>
+                <li onclick="showSection('iqubasat')"><i class="fas fa-quote-right"></i> اقتباسات</li>
+                <li onclick="showSection('qissa-wa-ibra')"><i class="fas fa-book"></i> قصة وعبرة</li>
+                <li onclick="showSection('amthal-shaabiya')"><i class="fas fa-comment-dots"></i> أمثال شعبية</li>
+                <li onclick="showSection('huruf-dhahabiya')"><i class="fas fa-gem"></i> حروف ذهبية</li>
+                <li onclick="showSection('iitizar')"><i class="fas fa-handshake"></i> اعتذار</li>
+                <li onclick="showSection('rasail')"><i class="fas fa-envelope-open-text"></i> رسائل</li>
+                <li onclick="showSection('maqulat')"><i class="fas fa-quote-left"></i> مقولات</li>
+                <li onclick="showSection('kalima-tayyiba')"><i class="fas fa-seedling"></i> الكلمة الطيبة</li>
+                <li onclick="showSection('philosophy')"><i class="fas fa-brain"></i> فلسفة</li>
+            </ul>
+        </section>
+
+        <section id="new" class="content">
+            <h2>الإضافات الجديدة</h2>
+            <div id="newContent"></div>
+        </section>
+
+        <section id="favorite" class="content">
+            <h2>المفضلة</h2>
+            <div id="favoritesList"></div>
+        </section>
+
+        <section id="settings" class="content">
+            <h2>الإعدادات</h2>
+            <ul class="settings-list">
+                <li onclick="contactUs()"><i class="fas fa-envelope"></i> تواصل معنا</li>
+                <li onclick="rateApp()"><i class="fas fa-star"></i> قيّم التطبيق</li>
+                <li onclick="shareApp()"><i class="fas fa-share-alt"></i> شارك التطبيق مع أصدقائك</li>
+                <li onclick="changeTheme('default')"><i class="fas fa-palette"></i> اللون الافتراضي (أزرق)</li>
+                <li onclick="changeTheme('green')"><i class="fas fa-palette"></i> اللون الأخضر الناعم</li>
+                <li onclick="changeTheme('purple')"><i class="fas fa-palette"></i> الأرجواني الداكن</li>
+                <li onclick="changeTheme('gray')"><i class="fas fa-palette"></i> الرمادي الفاتح</li>
+                <li id="fontSizeToggle"><i class="fas fa-text-height"></i> حجم الخط: 
+                    خط صغير <button onclick="changeFontSize('small')" class="font-size-btn"><i class="fas fa-check"></i></button>
+                    خط متوسط <button onclick="changeFontSize('medium')" class="font-size-btn"><i class="fas fa-check"></i></button>
+                    خط كبير <button onclick="changeFontSize('large')" class="font-size-btn"><i class="fas fa-check"></i></button>
+                </li>
+            </ul>
+        </section>
+
+        <section id="hikam" class="content">
+            <h2>حكم وأمثلة</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="hikamContent"></div>
+        </section>
+
+        <section id="azkar" class="content">
+            <h2>أدعية وأذكار</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="azkarContent"></div>
+        </section>
+
+        <section id="quotes" class="content">
+            <h2>عبارات وخواطر</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="quotesContent"></div>
+        </section>
+
+        <section id="qisas" class="content">
+            <h2>قصص</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="qisasContent"></div>
+        </section>
+
+        <section id="mawaez" class="content">
+            <h2>مواعظ</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="mawaezContent"></div>
+        </section>
+
+        <section id="atab" class="content">
+            <h2>عتاب</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="atabContent"></div>
+        </section>
+
+        <section id="iqubasat" class="content">
+            <h2>اقتباسات</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="iqubasatContent"></div>
+        </section>
+
+        <section id="qissa-wa-ibra" class="content">
+            <h2>قصة وعبرة</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="qissaWaIbraContent"></div>
+        </section>
+
+        <section id="amthal-shaabiya" class="content">
+            <h2>أمثال شعبية</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="amthalShaabiyaContent"></div>
+        </section>
+
+        <section id="huruf-dhahabiya" class="content">
+            <h2>حروف ذهبية</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="hurufDhahabiyaContent"></div>
+        </section>
+
+        <section id="iitizar" class="content">
+            <h2>اعتذار</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="iitizarContent"></div>
+        </section>
+
+        <section id="rasail" class="content">
+            <h2>رسائل</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="rasailContent"></div>
+        </section>
+
+        <section id="maqulat" class="content">
+            <h2>مقولات</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="maqulatContent"></div>
+        </section>
+
+        <section id="kalima-tayyiba" class="content">
+            <h2>الكلمة الطيبة</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="kalimaTayyibaContent"></div>
+        </section>
+
+        <section id="philosophy" class="content">
+            <h2>فلسفة</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <div id="philosophyContent"></div>
+        </section>
+
+        <section id="decoration" class="content">
+            <h2>الزخرفة</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <textarea id="decorationInput" placeholder="أدخل النص هنا للزخرفة..."></textarea>
+            <button onclick="decorateText()" class="ai-submit">زخرف</button>
+            <div id="decoratedOutput"></div>
+        </section>
+
+        <section id="custom-cards" class="content">
+            <h2>إنشاء بطاقة مخصصة</h2>
+            <button class="back-button" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> رجوع</button>
+            <textarea id="cardText" placeholder="أدخل النص هنا أو اختر من المفضلة..."></textarea>
+            <div class="card-options">
+                <h3>تخصيص البطاقة</h3>
+                <div class="option-group">
+                    <label>الخلفية:</label>
+                    <button onclick="changeCardBackground('linear-gradient(135deg, #e6f0fa, #d1e8ff)')">أزرق فاتح</button>
+                    <button onclick="changeCardBackground('linear-gradient(135deg, #e0f7fa, #b2ebf2)')">سماوي</button>
+                    <button onclick="changeCardBackground('linear-gradient(135deg, #f3e5f5, #e1bee7)')">أرجواني</button>
+                </div>
+                <div class="option-group">
+                    <label>الخط:</label>
+                    <button onclick="changeCardFont('Amiri')">Amiri</button>
+                    <button onclick="changeCardFont('Cairo')">Cairo</button>
+                </div>
+                <div class="option-group">
+                    <label>اللون:</label>
+                    <button onclick="changeCardColor('#1e90ff')">أزرق</button>
+                    <button onclick="changeCardColor('#d81b60')">وردي</button>
+                    <button onclick="changeCardColor('#388e3c')">أخضر</button>
+                </div>
+            </div>
+            <div id="cardPreview" class="card-preview">
+                <p id="cardPreviewText">معاينة النص هنا</p>
+            </div>
+            <div class="card-actions">
+                <button onclick="saveCard()" class="ai-submit">حفظ كصورة</button>
+                <button onclick="shareCard()" class="ai-submit">مشاركة</button>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
